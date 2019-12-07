@@ -250,4 +250,47 @@ public class FileDemo {
         // System是java.lang的一个类，用于和底层操作系统交互
         System.out.println();
     }
+
+    /**
+     * ByteArrayOutputStream使用
+     * @throws IOException
+     */
+    @Test
+    public void fun11() throws IOException {
+        // 对应英文字母“abcddefghijklmnopqrsttuvwxyz”
+        byte[] arrayLetters = {
+                0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69, 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F,
+                0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, 0x7A
+        };
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        // 依次写入A、B、C三个字母
+        baos.write(0x41);
+        baos.write(0x42);
+        baos.write(0x43);
+        System.out.println("baos = " + baos);
+
+        // 将arrayLetters从下标为3开始的后5个位置的元素写入到baos中，即0x64, 0x65, 0x66, 0x67, 0x68
+        baos.write(arrayLetters, 3, 5);
+        System.out.println("baos = " + baos);
+
+        int size = baos.size();
+        System.out.println("size = " + size);
+
+        // 转换成byte数组
+        byte[] bytes = baos.toByteArray();
+        String str = new String(bytes);
+        System.out.println("str = " + str);
+
+        // 转换成String字符串
+        String baosStr = baos.toString();
+        System.out.println("baosStr = " + baosStr);
+
+        // 将baos写入到另一个输出流中
+        ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
+        // writeTo(OutputStream out) 将该“字节数组输出流”的数据全部写入到“输出流out”中。
+        baos.writeTo(baos2);
+        System.out.println("baos2 = " +baos2);
+    }
 }
