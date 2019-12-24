@@ -251,18 +251,18 @@ public class FileDemo {
         System.out.println();
     }
 
+    // 对应英文字母“abcddefghijklmnopqrsttuvwxyz”
+    byte[] arrayLetters = {
+            0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69, 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F,
+            0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, 0x7A
+    };
+
     /**
      * ByteArrayOutputStream使用
      * @throws IOException
      */
     @Test
     public void fun11() throws IOException {
-        // 对应英文字母“abcddefghijklmnopqrsttuvwxyz”
-        byte[] arrayLetters = {
-                0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69, 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F,
-                0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, 0x7A
-        };
-
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // 依次写入A、B、C三个字母
@@ -292,5 +292,50 @@ public class FileDemo {
         // writeTo(OutputStream out) 将该“字节数组输出流”的数据全部写入到“输出流out”中。
         baos.writeTo(baos2);
         System.out.println("baos2 = " +baos2);
+    }
+
+
+    @Test
+    public void fun12() {
+        int len = 5;
+
+        ByteArrayInputStream bais = new ByteArrayInputStream(arrayLetters);
+
+        // 从字节流中读取5个字节
+        for (int i = 0; i < len; i++) {
+            // 若能继续读取下一个字节，则读取下一个字节
+            if (bais.available() >= 0) {
+                // 读取字节流的下一个字节
+                int read = bais.read();
+                System.out.println(read);
+            }
+        }
+
+        // 若该“字节流”不支持标记功能，则直接退出
+        if (!bais.markSupported()) {
+            System.out.println("not support mark!");
+            return;
+        }
+
+        // 标记“字节流中下一个被读取的位置”，这里的0没有实际意义，可以指定为任何数，它只作为一个记录数存在
+        // mark()方法通常与reset()方法连用，mark()标记当前读取指针的位置，reset()将读取指针回溯到标记的位置
+        bais.mark(0);
+
+        // 跳过5个字节。跳过5个字节后，字节流中下一个被读取的值应该是“0x6B”。
+        bais.skip(5);
+
+        // 从字节流中读取5个数据
+        byte[] buf = new byte[len];
+        bais.read(buf, 0, len);
+        String str1 = new String(buf);
+        System.out.println(str1);
+
+        // 重置字节流到mark()标记的地方
+        bais.reset();
+
+        // 从重置后的字节流读取5个字节到buf中
+        bais.read(buf, 0, len);
+        String str2 = new String(buf);
+        System.out.println("重置后的字节流：" + str2);
     }
 }
