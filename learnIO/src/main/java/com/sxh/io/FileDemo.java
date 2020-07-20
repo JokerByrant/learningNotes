@@ -3,6 +3,7 @@ package com.sxh.io;
 import org.junit.Test;
 
 import java.io.*;
+import java.util.*;
 
 /**
  * @author 一池春水倾半城
@@ -337,5 +338,28 @@ public class FileDemo {
         bais.read(buf, 0, len);
         String str2 = new String(buf);
         System.out.println("重置后的字节流：" + str2);
+    }
+
+    @Test
+    public void fun13() {
+        List<String> stringList = new ArrayList<String>();
+        stringList.add(null);
+        stringList.add("aa");
+        for (String item:stringList) {
+            System.out.println(item);
+        }
+    }
+
+    @Test
+    public void fun14() {
+        Student student = new Student("张三", "123", 11);
+        Student student1 = new Student("张三", "123", 12);
+        List<Student> list = new ArrayList<Student>();
+        list.add(student);
+        list.add(student1);
+        Set<Student> set = new TreeSet<Student>(Comparator.comparing(Student::getName));
+        set.addAll(list);
+
+        System.out.println(set);
     }
 }
