@@ -28,14 +28,17 @@ public class RpcFrameWork {
         if (port <= 0 || port > 65535)
             throw new IllegalArgumentException("Invalid port " + port);
         System.out.println("Export service " + service.getClass().getName() + " on port " + port);
+        // 建立Socket连接
         ServerSocket server = new ServerSocket(port);
         for(;;) {
             try {
+                // 监听端口，等待客户端请求
                 final Socket socket = server.accept();
                 new Thread(new Runnable() {
                     public void run() {
                         try {
                             try {
+                                // 读取客户端传输的指令
                                 ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
                                 try {
                                     String methodName = input.readUTF();
@@ -43,8 +46,11 @@ public class RpcFrameWork {
                                     Object[] arguments = (Object[])input.readObject();
                                     ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
                                     try {
+                                        // 根据客户端提供的 [方法名、参数类型] 获取对应的方法
                                         Method method = service.getClass().getMethod(methodName, parameterTypes);
+                                        // 调用方法，关于Method.invoke()是如何运行的参考: https://www.cnblogs.com/onlywujun/p/3519037.html
                                         Object result = method.invoke(service, arguments);
+                                        // 将方法调用结果回写给客户端
                                         output.writeObject(result);
                                     } catch (Throwable t) {
                                         output.writeObject(t);
@@ -91,13 +97,17 @@ public class RpcFrameWork {
         System.out.println("Get remote service " + interfaceClass.getName() + " from server " + host + ":" + port);
         return (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), new Class<?>[] {interfaceClass}, new InvocationHandler() {
             public Object invoke(Object proxy, Method method, Object[] arguments) throws Throwable {
+                // 调用方法时，建立Socket连接
                 Socket socket = new Socket(host, port);
                 try {
                     ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
                     try {
+                        // 将当前Client想要调用的方法的 [方法名、参数类型、参数值] 通过socket发送给Server端
                         output.writeUTF(method.getName());
                         output.writeObject(method.getParameterTypes());
                         output.writeObject(arguments);
+
+                        // 等待服务端回写 方法调用结果
                         ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
                         try {
                             Object result = input.readObject();

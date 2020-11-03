@@ -10,7 +10,7 @@ import java.io.IOException;
  * @author sxh
  * @date 2020/10/29
  */
-public class Main {
+public class Server {
     public static void main(String[] args) throws IOException {
         HelloService service = new HelloServiceImpl();
         RpcFrameWork.export(service, 1234);
