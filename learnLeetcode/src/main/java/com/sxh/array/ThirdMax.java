@@ -13,7 +13,8 @@ public class ThirdMax {
     int solution1(int[] nums) {
         TreeSet<Integer> set = new TreeSet<Integer>();
         for (int num:nums) {
-            // 添加到TreeSet中的数会自动完成排序
+            // 添加到TreeSet中的数会自动完成排序。
+            // 附：TreeSet默认会通过类的自然顺序对元素进行排序，自然顺序就是类在compareTo()方法中实现的排序方法，在这里会使用Integer中的排序方法。
             set.add(num);
             // 如果TreeSet大小大于3，则移除最小的元素，first()--->获取头元素
             if (set.size() > 3) {
