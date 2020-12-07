@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * @author sxh
  * @date 2020/12/3
  */
-public class ErrorNums {
+public class ErrorNums_645 {
     // 1.利用HashMap
     public int[] findErrorNums1(int[] nums) {
         int lost = -1;

@@ -8,7 +8,7 @@ import java.util.TreeSet;
  * @author sxh
  * @date 2020/11/25
  */
-public class ThirdMax {
+public class ThirdMax_414 {
     // 1.利用TreeSet是有序的这一特性
     int solution1(int[] nums) {
         TreeSet<Integer> set = new TreeSet<Integer>();
