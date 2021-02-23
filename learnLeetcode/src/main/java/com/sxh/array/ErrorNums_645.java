@@ -48,6 +48,24 @@ public class ErrorNums_645 {
         int repeat = arrSum - setSum;
         // 丢失的数
         int lost = realSum - setSum;
+
+        return new int[]{repeat, lost};
+    }
+
+    // 3.维护一个数组，用来统计数组中每个元素出现的次数
+    public int[] findErrorNums3(int[] nums) {
+        int repeat = 0, lost = 0;
+        int[] cnt = new int[nums.length+1];
+        for(int num:nums) {
+            cnt[num]++;
+        }
+        for(int i = 1; i < cnt.length; i++) {
+            if(cnt[i] == 2) {
+                repeat = i;
+            } else if(cnt[i] == 0) {
+                lost = i;
+            }
+        }
         return new int[]{repeat, lost};
     }
 
@@ -56,7 +74,9 @@ public class ErrorNums_645 {
         int[] arr = {1,2,3,3,4,5};
         int[] errorNums1 = findErrorNums1(arr);
         int[] errorNums2 = findErrorNums2(arr);
+        int[] errorNums3 = findErrorNums3(arr);
         System.out.println(Arrays.stream(errorNums1).boxed().collect(Collectors.toList()));
         System.out.println(Arrays.stream(errorNums2).boxed().collect(Collectors.toList()));
+        System.out.println(Arrays.stream(errorNums3).boxed().collect(Collectors.toList()));
     }
 }
