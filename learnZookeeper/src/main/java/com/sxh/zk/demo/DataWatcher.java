@@ -1,4 +1,4 @@
-package com.sxh.zk;
+package com.sxh.zk.demo;
 
 import org.apache.zookeeper.*;
 

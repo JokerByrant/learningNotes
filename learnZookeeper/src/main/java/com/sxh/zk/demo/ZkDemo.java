@@ -1,4 +1,4 @@
-package com.sxh.zk;
+package com.sxh.zk.demo;
 
 /**
  * Zookeeper基础Demo
