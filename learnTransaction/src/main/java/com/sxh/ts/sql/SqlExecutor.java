@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
+ * 执行Sql
+ *
  * @author sxh
  * @date 2021/11/12
  */

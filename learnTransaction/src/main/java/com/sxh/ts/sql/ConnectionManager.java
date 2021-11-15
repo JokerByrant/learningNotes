@@ -1,6 +1,6 @@
 package com.sxh.ts.sql;
 
-import com.mysql.jdbc.Driver;
+import com.mysql.cj.jdbc.Driver;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +13,7 @@ import java.util.Properties;
  * @date 2021/11/12
  */
 public class ConnectionManager {
-    private static final String url = "jdbc:mysql://localhost:3306";
+    private static final String url = "jdbc:mysql://localhost:3306/demo";
     private static final String user = "root";
     private static final String password = "123456";
 
@@ -21,7 +21,7 @@ public class ConnectionManager {
      * 方式1: 通过得到字节码对象的方式加载静态代码块，从而注册驱动程序
      */
     public static Connection getConnection1() throws Exception {
-        Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(url, user, password);
     }
 
