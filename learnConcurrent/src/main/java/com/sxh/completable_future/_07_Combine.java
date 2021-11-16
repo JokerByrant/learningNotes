@@ -3,6 +3,7 @@ package com.sxh.completable_future;
 import org.junit.Test;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * 合并多个任务为一个任务
@@ -15,7 +16,8 @@ public class _07_Combine {
      * allOf() -> 合并多个complete为一个，等待全部完成
      */
     @Test
-    public void _allOf() {
+    public void _allOf() throws ExecutionException, InterruptedException {
+        long start = System.currentTimeMillis();
         // 创建异步执行任务:
         CompletableFuture<String> cfA = CompletableFuture.supplyAsync(() -> {
             Util.sleep(1000);
@@ -32,16 +34,26 @@ public class _07_Combine {
             Util.printTimeAndThread("processing c...");
             return "Method c";
         });
+        // List<CompletableFuture<String>> cfList = Arrays.asList(cfA, cfB, cfC);
+        // CompletableFuture.allOf(cfList.toArray(new CompletableFuture[0]));
+        // for (CompletableFuture<String> cf : cfList) {
+        //     Util.printTimeAndThread(cf.get());
+        // }
         // allOf等待所有任务执行完成才执行cfD，如果有一个任务异常终止，则cfD.get时会抛出异常，都是正常执行，cfD.get返回null
         CompletableFuture<Void> cfD = CompletableFuture.allOf(cfA, cfB, cfC).whenComplete((value, e) -> {
             Util.printTimeAndThread("processing d...");
             if (e != null) {
                 e.printStackTrace();
             } else {
-                System.out.println("任务执行成功！" + value);
+                try {
+                    System.out.println("任务执行成功！" + cfA.get() + " --- " + cfB.get() + " --- " + cfC.get());
+                } catch (InterruptedException | ExecutionException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         cfD.join();
+        System.out.println("总耗时：" + (System.currentTimeMillis() - start));
     }
 
     /**
