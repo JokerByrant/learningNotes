@@ -6,6 +6,7 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 异步任务结果合并消费
+ * 注：下面三个方法中合并消费的几个任务都是并行执行的
  * @author sxh
  * @date 2021/11/15
  */
@@ -59,6 +60,26 @@ public class _04_Combine_Consume {
         CompletableFuture<Void> cfAB = cfA.thenAcceptBoth(cfB, (resultA, resultB) -> {
             Util.printTimeAndThread(resultA + resultB);
         });
+        cfAB.join();
+    }
+
+    /**
+     * runAfterBoth() -> 合并另外一个任务，两个任务都完成后，执行方法体，无入参，无返回值。
+     */
+    @Test
+    public void _runAfterBoth() {
+        CompletableFuture<String> cfA = CompletableFuture.supplyAsync(() -> {
+            Util.sleep(1000);
+            Util.printTimeAndThread("processing a...");
+            return "Hello";
+        });
+        CompletableFuture<String> cfB = CompletableFuture.supplyAsync(() -> {
+            Util.sleep(1000);
+            Util.printTimeAndThread("processing b...");
+            return " World";
+        });
+        // 两个任务异步执行
+        CompletableFuture<Void> cfAB = cfA.runAfterBoth(cfB, Util::printTimeAndThread);
         cfAB.join();
     }
 }

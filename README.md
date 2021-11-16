@@ -1,2 +1,2 @@
 # learningNotes
-java基础学习记录
+Java 学习记录合集

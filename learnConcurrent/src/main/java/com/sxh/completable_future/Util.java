@@ -34,7 +34,7 @@ public class Util {
      */
     protected static void printTimeAndThread(String tag){
         String result = new StringJoiner("\t|\t")
-                .add(String.valueOf(getTodayStr()))
+                .add(getTodayStr())
                 .add(String.valueOf(Thread.currentThread().getId()))
                 .add(Thread.currentThread().getName())
                 .add(tag)
