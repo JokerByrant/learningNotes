@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+
 /**
  * 异步任务构建方法
  * @author sxh
@@ -19,7 +20,7 @@ public class _02_Build {
     public void _runAsync() {
         CompletableFuture<Void> cf = CompletableFuture.runAsync(() -> {
             Util.sleep(1000);
-            System.out.println("Hello World!");
+            Util.printTimeAndThread("Hello World!");
         });
         cf.join();
     }
@@ -31,9 +32,9 @@ public class _02_Build {
     public void _supplyAsync() throws ExecutionException, InterruptedException {
         CompletableFuture<String> cf = CompletableFuture.supplyAsync(() -> {
             Util.sleep(1000);
+            Util.printTimeAndThread();
             return "Hello World!";
         });
-        cf.join();
-        System.out.println(cf.get());
+        Util.printTimeAndThread(cf.get());
     }
 }

@@ -18,6 +18,7 @@ public class _01_Future {
         ExecutorService es = Executors.newFixedThreadPool(10);
         Future<Integer> future = es.submit(() -> {
             Util.sleep(2000);
+            Util.printTimeAndThread();
             return 100;
         });
         // 查看future异步任务执行结果，两个办法：
@@ -27,7 +28,7 @@ public class _01_Future {
         // 2.轮询调用isDone()，查看是否为true
         while (true) {
             if (future.isDone()) {
-                System.out.println("异步任务执行成功！");
+                Util.printTimeAndThread("异步任务执行成功！");
                 break;
             }
         }

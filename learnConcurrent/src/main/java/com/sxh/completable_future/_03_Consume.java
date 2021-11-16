@@ -19,8 +19,9 @@ public class _03_Consume {
     public void _thenAccept() {
         CompletableFuture<Void> cf = CompletableFuture.supplyAsync(() -> {
             Util.sleep(1000);
+            Util.printTimeAndThread();
             return "first";
-        }).thenAccept((result) -> System.out.println("任务执行完毕：" + result));
+        }).thenAccept((result) -> Util.printTimeAndThread("任务执行完毕：" + result));
         cf.join();
     }
 
@@ -33,13 +34,15 @@ public class _03_Consume {
     public void _thenApply() throws ExecutionException, InterruptedException {
         CompletableFuture<String> cf = CompletableFuture.supplyAsync(() -> {
             Util.sleep(1000);
+            Util.printTimeAndThread();
             return "first";
         }).thenApply((result) -> {
             Util.sleep(1000);
+            Util.printTimeAndThread();
             return result + "--" + "second";
         });
         // 主线程阻塞，直到cf任务完成
-        System.out.println(cf.get());
+        Util.printTimeAndThread(cf.get());
     }
 
     /**
@@ -49,10 +52,11 @@ public class _03_Consume {
     public void _thenRun() {
         CompletableFuture<Void> cf = CompletableFuture.supplyAsync(() -> {
             Util.sleep(1000);
+            Util.printTimeAndThread();
             return "first";
         }).thenRun(() -> {
             Util.sleep(1000);
-            System.out.println("第二阶段任务完成！");
+            Util.printTimeAndThread("第二阶段任务完成！");
         });
         cf.join();
     }
