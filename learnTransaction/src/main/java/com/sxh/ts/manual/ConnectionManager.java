@@ -1,4 +1,4 @@
-package com.sxh.ts.sql;
+package com.sxh.ts.manual;
 
 import com.mysql.cj.jdbc.Driver;
 

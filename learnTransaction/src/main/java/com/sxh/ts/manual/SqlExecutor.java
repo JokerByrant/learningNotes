@@ -1,4 +1,4 @@
-package com.sxh.ts.sql;
+package com.sxh.ts.manual;
 
 import com.sxh.ts.util.DateUtil;
 import com.sxh.ts.util.UuidUtil;

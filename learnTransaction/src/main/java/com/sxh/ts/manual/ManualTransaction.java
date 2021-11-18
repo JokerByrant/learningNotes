@@ -1,7 +1,5 @@
-package com.sxh.ts.demo;
+package com.sxh.ts.manual;
 
-import com.sxh.ts.sql.ConnectionManager;
-import com.sxh.ts.sql.SqlExecutor;
 import org.junit.Test;
 
 import java.sql.Connection;
