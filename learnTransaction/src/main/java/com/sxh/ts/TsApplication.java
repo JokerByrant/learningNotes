@@ -9,8 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author sxh
  * @date 2021/11/16
  */
-@SpringBootApplication
 @MapperScan(value = "com.sxh.ts.automatic")
+@SpringBootApplication
 public class TsApplication {
     public static void main(String[] args) {
         SpringApplication.run(TsApplication.class, args);
