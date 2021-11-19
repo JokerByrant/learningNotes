@@ -15,9 +15,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class Test {
     @Autowired
     private AutomaticTransaction automaticTransaction;
+    @Autowired
+    private AutomaticTransaction2 automaticTransaction2;
 
     @org.junit.Test
     public void _test_Transactional() {
         automaticTransaction.insert();
+        automaticTransaction2.insert();
     }
 }

@@ -4,21 +4,20 @@ import com.sxh.ts.entity.TransactionDemo;
 import com.sxh.ts.util.UuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
 /**
- * Spring框架的事务管理
+ * 这个方法用来测试事务的传播属性
  * @author sxh
- * @date 2021/11/15
+ * @date 2021/11/19
  */
 @Component
-public class AutomaticTransaction {
+public class AutomaticTransaction2 {
     @Autowired
     private SqlExecutor sqlExecutor;
-    @Autowired
-    private AutomaticTransaction2 automaticTransaction2;
 
     @Transactional
     public void insert() {
@@ -27,7 +26,5 @@ public class AutomaticTransaction {
         if (effectRow == 0) {
             throw new RuntimeException("新增失败！");
         }
-        automaticTransaction2.insert();
     }
 }
-
