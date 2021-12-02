@@ -9,4 +9,7 @@
         <property name="gender" value="0"/>
         <property name="color" value="black"/>
     </bean>
+
+    <!-- 定义一个通过FactoryBean注册的Bean -->
+    <bean id="catFactoryBean" class="com.sxh.ioc.bean.MyCatFactoryBean"></bean>
 </beans>
